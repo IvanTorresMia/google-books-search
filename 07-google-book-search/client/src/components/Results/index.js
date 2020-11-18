@@ -33,11 +33,7 @@ function Results(props) {
               <div className="row mb-4 mt-3">
                 <div className="col-lg-4 bookImg">
                   {book.volumeInfo.imageLinks ? <img className="img-fluid" src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title} />
-<<<<<<< HEAD
                   : <img src="./googlebookslogo.png" alt="title" className="img-fluid logo2" />}
-=======
-                    : <img src="https://via.placeholder.com/140x100" alt="title" className="img-fluid" />}
->>>>>>> savedBooks
                 </div>
                 <div className="col-lg-8">
                   <h2>{book.volumeInfo.title}</h2>
@@ -45,7 +41,7 @@ function Results(props) {
                     : book.volumeInfo.authors}</p>
                   <p className="mr-4">{book.volumeInfo.description}</p>
                   <a className="btn btn-primary" target="_blank" href={book.volumeInfo.infoLink}>View</a>
-                  <button className="ml-3 btn btn-primary" onClick={() => { props.saveBook(book) }, () => {saveModal(book)}}>Save</button>
+                  <button className="ml-3 btn btn-primary" onClick={() => { props.saveBook(book) }}>Save</button>
                 </div>
               </div>
             </div>
