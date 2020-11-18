@@ -16,9 +16,6 @@ function Search() {
         
 
     
-    
-
-
     const handleSearchChange = (e) => {
         const { value } = e.target
         setSearchState(value)
@@ -26,22 +23,32 @@ function Search() {
     };
 
 
-    const searchBooks = () => {
+    const searchBooks = async () => {
         
-        APIbooks.getBooks(searchState)
+       let newBooks = await APIbooks.getBooks(searchState)
         .then((res) => {
             setLoading(false);
-            setBooks(res.data.items)
+            return res.data.items;
             console.log(books)
         })
+        console.log("newBooks: ", newBooks);
+        setBooks(newBooks);
+        setLoading(false);
     }
 
     const saveBook = (book) => {
+        var image;
+        if(book.volumeInfo.imageLinks===undefined){
+            image = "./googlebookslogo.png"
+        } else {
+            image = book.volumeInfo.imageLinks.thumbnail
+        }
+
         const data = {
             title:book.volumeInfo.title,
             author:book.volumeInfo.authors,
             description:book.volumeInfo.description,
-            image: book.volumeInfo.imageLinks.thumbnail,
+            image: image,
             link:book.volumeInfo.infoLink
         }
        
@@ -54,7 +61,7 @@ function Search() {
  
 
     return(
-        <div>
+        <div className="mb-5">
         <Navbar/>
         <Jumbotron />
         
