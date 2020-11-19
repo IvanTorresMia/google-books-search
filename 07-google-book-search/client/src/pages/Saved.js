@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Jumbotron from "../components/Jumbotron";
 import APIbooks from "../utils/booksAPI";
@@ -12,25 +12,28 @@ function Saved() {
         // console.log("working");
         // console.log(id);
         APIbooks.deleteBook(id)
-        .then((res)=>{
-           console.log(res);
-        })
+            .then((res) => {
+                console.log(res);
+            })
     }
-
     useEffect(() => {
         APIbooks.getApiBooks()
-        .then(res=>setBooks(res.data))
-        // console.log(books)
-        }, [books])
+            .then(res => setBooks(res.data))
+    }, [])
 
-    return(
+
+
+    useEffect(() => {
+    }, [books])
+
+    return (
 
         <div className="mb-5">
-        <React.Fragment>
-            <Navbar />
-            <Jumbotron />
-            <SavedBooks books={books} deleteBooks={deleteBooks}/>
-        </React.Fragment>
+            <React.Fragment>
+                <Navbar />
+                <Jumbotron />
+                <SavedBooks books={books} deleteBooks={deleteBooks} />
+            </React.Fragment>
         </div>
     )
 }

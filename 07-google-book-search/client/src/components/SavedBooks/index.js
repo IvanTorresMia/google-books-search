@@ -14,7 +14,7 @@ function SavedBooks({ books, deleteBooks }) {
                 {book.image ? <img src={book.image} alt="title" className="img-fluid" />
                   : <img src="https://via.placeholder.com/140x100" alt="title" className="img-fluid" />}
               </div>
-              <div className="col-lg-8">
+              <div className="col-lg-8 books">
                 <h2>{book.title}</h2>
                 <p>{book.author.join(' & ')}</p>
                 <p className="mr-4">{book.description}</p>

@@ -11,7 +11,6 @@ function Search() {
 
     const [searchState, setSearchState] = useState("");
     const [books, setBooks] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [modalClass, setModalClass] = useState("modal hideModal");
     const [text, setText] = useState("Saved!");
     const [ids, setIds] = useState([]);
@@ -32,15 +31,25 @@ function Search() {
 
 
     const searchBooks = async () => {
-
+        var holder = [];
+        holder.length = 0;
         let newBooks = await APIbooks.getBooks(searchState)
             .then((res) => {
-                setLoading(false);
                 return res.data.items;
             })
         // console.log("newBooks: ", newBooks);
         console.log("newBooks", newBooks);
         setBooks(newBooks);
+
+        APIbooks.getApiBooks()
+            .then(res => {
+                for (let i = 0; i < res.data.length; i++) {
+                    holder.push(res.data[i].id);
+                }
+                console.log("savebook response: ", res)
+            })
+        console.log("holder: ", holder);
+        setIds(holder);
     }
 
     const saveBook = (book) => {
@@ -51,18 +60,17 @@ function Search() {
         } else {
             image = book.volumeInfo.imageLinks.thumbnail
         }
-        
+        console.log("saved ids: ", ids);
+        console.log("new book id: ", book.id)
         // console.log("book id: ", book.id);
-        if(!ids.includes(book.id)){
-            setIds([...ids, book.id]);
+        if (!ids.includes(book.id)) {
             setModalClass("modal showModal");
             setText(book.volumeInfo.title + " was saved!");
-        }else{
+            setIds([...ids, book.id]);
+        } else {
             setModalClass("modal showModal");
             setText(book.volumeInfo.title + " is already saved!");
         }
-
-
         const data = {
             title: book.volumeInfo.title,
             author: book.volumeInfo.authors,
@@ -78,7 +86,6 @@ function Search() {
 
         }).then(err => {
             console.log("error", err);
-
         });
     }
 
